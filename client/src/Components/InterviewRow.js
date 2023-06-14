@@ -1,20 +1,22 @@
 import React, { Fragment, useState } from 'react'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { Button, Collapse, Divider, FormControl, Grid, IconButton, InputLabel, MenuItem, Select, Snackbar, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography, setRef } from '@mui/material';
+import { Button, Collapse, Divider, FormControl, Grid, IconButton, InputLabel, MenuItem, Select, Snackbar, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import moment from 'moment'
 import axios from 'axios';
 import MuiAlert from '@mui/material/Alert';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
+// Alert notification of MUI
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
 function InterviewRow({company, companyId, refresh, setRefresh}) {
-    const url = "https://college-project.onrender.com"
+    const url = "https://team-career-camp.onrender.com"
 
+    // states
     const [open, setOpen] = React.useState(false);
     const [student, setStudent] = useState({
         email: '',
@@ -24,13 +26,12 @@ function InterviewRow({company, companyId, refresh, setRefresh}) {
         email: '',
         result: '',
     })
-    
-    
     const [alertOpen, setAlertOpen] = useState(false)
     const [customVariant, setCustomVariant] = React.useState('success')
     const [success, setSuccess] = React.useState('')
     const [error, setError] = React.useState('')
 
+    // handle close for UI component alert
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
         return;
@@ -38,6 +39,7 @@ function InterviewRow({company, companyId, refresh, setRefresh}) {
         setAlertOpen(false);
     }
 
+    // input onchange event
     const handleOnChange = (evt) => {
         setStudent({
           ...student,
@@ -50,6 +52,7 @@ function InterviewRow({company, companyId, refresh, setRefresh}) {
         })
     }
 
+    // scheduling interview
     const handleSubmit = async(evt) => {
         evt.preventDefault()
 
@@ -63,39 +66,28 @@ function InterviewRow({company, companyId, refresh, setRefresh}) {
             })
         }else{
             return await axios.post(`${url}/interview/enrolledInterview/${companyId}`, student).then((response) => {
-            // return await axios.post(`http://localhost:4000/interview/enrolledInterview/${companyId}`, student).then((response) => {
-                
-                    setSuccess(response.data.msg)
-                    setCustomVariant('success')
-                    setAlertOpen(true)
-                    setStudent({
-                        email: '',
-                        result: ''
-                    })
-                    if(refresh){
-                        setRefresh(false)
-                    }else{
-                        setRefresh(true)
-                    }
-                // console.log("response: ", response);
+                setSuccess(response.data.msg)
+                setCustomVariant('success')
+                setAlertOpen(true)
+                setStudent({
+                    email: '',
+                    result: ''
+                })
+                if(refresh){
+                    setRefresh(false)
+                }else{
+                    setRefresh(true)
+                }
             }).catch((err) => {
                 console.log("error on enrolling student to interview: " , err);
-                /* if(err.response.data.success){
-                    setError(response.data.msg)
-                    setCustomVariant('error')
-                    setAlertOpen(true)
-                }else{ */
-                    setError(err.response.data.msg)
-                    setCustomVariant('error')
-                    setAlertOpen(true)
-
-                // }
-                // console.log("response: ", err.response.data.success);
+                setError(err.response.data.msg)
+                setCustomVariant('error')
+                setAlertOpen(true)
             })
         }
     }
-    // console.log("company.students: ", company.students);
 
+    // removing scheduled interview
     const deallocateInterview = async(id) => {
         
         await axios.post(`${url}/interview/deallocateInterview/${id}/${companyId}`).then((response) => {
@@ -135,6 +127,7 @@ function InterviewRow({company, companyId, refresh, setRefresh}) {
 
     return (
         <Fragment >
+            {/* notification popup */}
             <Snackbar open={alertOpen} autoHideDuration={6000} onClose={handleClose}>
               <Alert onClose={handleClose} severity={customVariant} sx={{ width: '100%' }}>
                   {success ? success : error}

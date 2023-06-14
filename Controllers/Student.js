@@ -2,12 +2,12 @@ const Students = require('../Models/Students')
 const Interviews = require('../Models/Interviews')
 
 
+// geting all the students from database
 module.exports.getStudents = async(req, res) => {
 
     try {
 
         const result = await Students.find({}).populate('interviews')
-        // const result = await Students.find()
         if(result){
             return res.status(200).json({result, success: true})
         }else{
@@ -20,6 +20,7 @@ module.exports.getStudents = async(req, res) => {
     }
 }
 
+// geting single student from database
 exports.getById = async(req, res) => {
     const id = req.params.id
 
@@ -40,6 +41,7 @@ exports.getById = async(req, res) => {
     }
 }
 
+// adding student to database
 exports.addStudent = async(req, res) => {
     const {name, email, batch, college, placementStatus, dsaScore, reactScore, webDScore} = req.body
 
@@ -81,6 +83,7 @@ exports.addStudent = async(req, res) => {
     }
 }
 
+// updating student in database
 exports.updateStudent = async(req, res) => {
     const id = req.params.id
     const { name, email, college, batch, dsaScore, reactScore, webDScore, placementStatus } = req.body
@@ -105,6 +108,7 @@ exports.updateStudent = async(req, res) => {
     }
 }
 
+// deleting studnet from database
 exports.deleteStudent = async(req, res) => {
     const id = req.params.id
     

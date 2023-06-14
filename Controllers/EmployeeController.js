@@ -5,13 +5,13 @@ const dotenv = require('dotenv').config()
 const salt = process.env.SALT
 const secret = process.env.SECRET
 
-// there is a but to create a token data is not converting in to jwt token missing
+// to create token
 const createToken = (result) => {
-    // console.log("result: token", result);
     return jwt.sign({result}, secret, {expiresIn: '30d'})
 }
 
 
+// signUp function
 exports.signup = async(req, res) => {
     const name = req.body.name
     const email = req.body.email
@@ -28,21 +28,27 @@ exports.signup = async(req, res) => {
             return res.status(400).json({msg: 'Password must be more than 5 words', success: false})
         }else{
             
-            const hashedPass = await bcrypt.hash(password, parseInt(salt))
-
-            const employees = new Employees({name: name, email: email, password: hashedPass})
-            const result = await employees.save()
-            if(result){
-                // const data = {name: result.name, email: result.email}
-                const token = createToken({_id: result._id, name: result.name, email: result.email})
-                if(token){
-                    return res.status(200).json({token, success: true})
-                }else{
-                    console.log("failed to generate token");
-                }
+            const findEmp = await Employees.findOne({email: email})
+            if(findEmp){
+                return res.status(400).json({msg: "Email already exists! Please SignIn.", success: false})
             }else{
-                console.log("falied to save result", result);
-                return res.status(400).json({msg: 'Something went wrong!', success: false})
+                // hashing password using bcrypt
+                const hashedPass = await bcrypt.hash(password, parseInt(salt))
+
+                const employees = new Employees({name: name, email: email, password: hashedPass})
+                const result = await employees.save()
+                if(result){
+                    // creating token
+                    const token = createToken({_id: result._id, name: result.name, email: result.email})
+                    if(token){
+                        return res.status(200).json({token, success: true})
+                    }else{
+                        console.log("failed to generate token");
+                    }
+                }else{
+                    console.log("falied to save result", result);
+                    return res.status(400).json({msg: 'Something went wrong!', success: false})
+                }
             }
         }
     } catch (error) {
@@ -51,6 +57,7 @@ exports.signup = async(req, res) => {
     }
 }
 
+// login function
 exports.signin = async(req, res) => {
     const email = req.body.email
     const password = req.body.password
@@ -65,6 +72,7 @@ exports.signin = async(req, res) => {
         }else{
             const findEmp = await Employees.findOne({email: email})
             if(findEmp){
+                // bcrypt to match hashed password
                 const matchPass = await bcrypt.compare(password, findEmp.password)
                 if(matchPass){
                     const token = createToken({_id: findEmp._id, name: findEmp.name, email: findEmp.email})

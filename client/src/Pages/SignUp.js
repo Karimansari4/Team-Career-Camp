@@ -3,25 +3,34 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-// import Link from '@mui/material/Link';
 import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { Paper } from '@mui/material';
+import MuiAlert from '@mui/material/Alert';
+import { Snackbar } from '@mui/material'
 
 // http://localhost:4000/admin/login
 
 const theme = createTheme();
 
+// Alert notification of MUI
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 export default function SignUp() {
-  const url = "https://college-project.onrender.com"
+  const url = "https://team-career-camp.onrender.com"
+  
+  // react-router-dom navigation function
   const navigate = useNavigate()
+
+  // states
   const [emp, setEmp] = React.useState({
     name: '',
     email: '',
@@ -34,7 +43,20 @@ export default function SignUp() {
     password: '',
     conPass: ''
   })
+  const [open, setOpen] = React.useState(false);
+  const [customVariant, setCustomVariant] = React.useState('error')
+  const [error, setError] = React.useState('')
 
+
+  // handle close for UI component alert
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  }
+
+  // input onchange event
   const handleOnChange = (evt) => {
     setEmp({
       ...emp,
@@ -49,6 +71,7 @@ export default function SignUp() {
     })
   }
 
+  // handle submit to signUp
   const handleSubmit = async(evt) => {
     evt.preventDefault();
     if(!emp.name){
@@ -72,13 +95,15 @@ export default function SignUp() {
         conPass: 'Password and confirm password are not matched!'
       })
     }else{
-      // return await axios.post('http://localhost:4000/empAuth/signUp', emp).then((response) => {
-      return await axios.post(`${url}/empAuth/signUp`, emp).then((response) => {
-        console.log("response: ", response);
+        return await axios.post(`${url}/empAuth/signUp`, emp).then((response) => {
+        
         const token = response.data.token
         localStorage.setItem("token", token)
         navigate('/')
       }).catch((err) => {
+        setError(err.response.data.msg)
+        setCustomVariant('error')
+        setOpen(true)
         console.log("err: ", err);
       })
     }
@@ -87,6 +112,11 @@ export default function SignUp() {
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" maxWidth="xs" sx={{ height: '100vh'}}>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity={customVariant} sx={{ width: '100%' }}>
+                {error ? error : ''}
+            </Alert>
+        </Snackbar>
         <CssBaseline />
         <Grid item xs={false} sm={false} md={6} sx={{ backgroundImage: 'url(background1.jpg)', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center'}} />
 

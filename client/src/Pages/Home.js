@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Container, Grid, Paper, Skeleton, Table, TableHead, } from '@mui/material'
+import { Container, Grid, Paper, Skeleton, Table, TableHead, } from '@mui/material'
 import axios from 'axios'
 import Row from '../Components/Row'
 import InterviewRow from '../Components/InterviewRow'
-import { CSVLink } from 'react-csv'
 
 
 
   
 export default function Home() {
-    const url = "https://college-project.onrender.com"
+    const url = "https://team-career-camp.onrender.com"
 
+    // states
     const [students, setStudents] = useState([])
     const [interviews, setInterviews] = useState([])
     const [refresh, setRefresh] = useState(false)
     const [comLoading, setComLoading] = useState(false)
-    const [report, setReport] = useState()
-
-    // console.log("result: ", csvResult);
-
+    
+    // getting all the students
     const getAllStudents = async() =>{
         return await axios.get(`${url}/student/getStudent`).then((response) => {
             setStudents(response.data.result)
@@ -29,6 +27,7 @@ export default function Home() {
         })
     }
 
+    // getting all the company
     const getAllCompanys = async() => {
         return await axios.get(`${url}/interview/getAllInterviews`).then((response) => {
             setInterviews(response.data.result)
@@ -39,6 +38,7 @@ export default function Home() {
         })
     }
 
+    // useEffect to redern on every reloading of page or refresh trigered
     useEffect(() => {
         getAllStudents()
         getAllCompanys()
@@ -48,6 +48,7 @@ export default function Home() {
         <Container>
             <Grid container spacing={2}>
                 
+                {/* rendering all the student details */}
                 <Grid item xs={12} sm={12} md={6} lg={6} >
                     {comLoading ? (
                         <Table component={Paper} sx={{ mt: 2, width: '100%', padding: '10px'}}>
@@ -61,6 +62,8 @@ export default function Home() {
                         <Skeleton width={"100%"} height={"90px"} animation="wave" />
                     </>}
                 </Grid>
+
+                {/* rednering all the details of company */}
                 <Grid item xs={12} sm={12} md={6} lg={6} >
                     {comLoading ? (
                         <Table component={Paper} sx={{ mt: 2, width: '100%', padding: '10px'}}>
@@ -74,9 +77,7 @@ export default function Home() {
                         <Skeleton width={"100%"} height={"90px"} animation="wave" />
                     </>}
                 </Grid>
-            </Grid>
-            {/* <CSVLink data={csvResult} headers={headers} filename={`Student Report ${Date()}`}>Download Me</CSVLink> */}
-            
+            </Grid>            
         </Container>
     )
 }

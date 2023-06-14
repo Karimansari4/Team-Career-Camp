@@ -8,19 +8,22 @@ import MuiAlert from '@mui/material/Alert';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 
+// Alert notification of MUI
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
 function Row({student, studentId, refresh, setRefresh}) {
-    const url = "https://college-project.onrender.com"
+    const url = "https://team-career-camp.onrender.com"
 
+    // states
     const [open, setOpen] = useState(false)
     const [alertOpen, setAlertOpen] = useState(false)
     const [customVariant, setCustomVariant] = React.useState('success')
     const [success, setSuccess] = React.useState('')
     const [error, setError] = React.useState('')
 
+    // handle close of alert MUI
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
         return;
@@ -28,6 +31,7 @@ function Row({student, studentId, refresh, setRefresh}) {
         setAlertOpen(false);
     }
     
+    // deleting student
     const deleteStudent = async(id) => {
         
         if(student.interviews.length > 0){

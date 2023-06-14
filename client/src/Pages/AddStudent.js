@@ -8,21 +8,21 @@ import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
 import { FormControl, InputLabel, MenuItem, Select, Snackbar } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 
 // http://localhost:4000/admin/login
 
 
+// Alert notification of MUI
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 function AddStudent() {
-  const url = "https://college-project.onrender.com"
+  const url = "https://team-career-camp.onrender.com"
 
-  const navigate = useNavigate()
+  // states
   const [student, setStudent] = React.useState({
     name: '',
     email: '',
@@ -49,6 +49,7 @@ function AddStudent() {
   const [success, setSuccess] = React.useState('')
   const [error, setError] = React.useState('')
 
+  // handle close for UI component alert
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -56,6 +57,7 @@ function AddStudent() {
     setOpen(false);
   }
 
+  // input onchange event
   const handleOnChange = (evt) => {
     setStudent({
       ...student,
@@ -74,6 +76,7 @@ function AddStudent() {
     })
   }
 
+  // adding student
   const handleSubmit = async(evt) => {
     evt.preventDefault();
     if(!student.name){
@@ -157,8 +160,6 @@ function AddStudent() {
 
   };
 
-  // console.log("placement status: ", student);
-
     return (
         <Container>
           <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
@@ -200,27 +201,27 @@ function AddStudent() {
                 </FormControl>
               </Grid>
 
-              <Grid item xs={6} /*  md={6} lg={6} */>
+              <Grid item xs={6} >
                 <TextField style={{ backgroundColor: 'white', borderRadius: '5px'}} error={valErr.batch ? true : false}  required fullWidth id="batch" onChange={handleOnChange} label="Batch" name="batch" value={student.batch} />
                 <Typography variant='body1' color={'error'} component="p" >{valErr.batch ? valErr.batch : ''}</Typography>
               </Grid>
 
-              <Grid item xs={4} /*  md={4} lg={4} */>
+              <Grid item xs={4} >
                 <TextField type={'number'} style={{ backgroundColor: 'white', borderRadius: '5px'}} error={valErr.dsaScore ? true : false} required fullWidth id="dsaScore" onChange={handleOnChange} label="DSA Score" name="dsaScore" value={student.dsaScore} InputProps={{inputProps: { max: 100, min: 0 } }} />
                 <Typography variant='body1' color={'error'} component="p" >{valErr.dsaScore ? valErr.dsaScore : ''}</Typography>
               </Grid>
 
-              <Grid item xs={4} /*  md={4} lg={4} */>
+              <Grid item xs={4} >
                 <TextField type={'number'} style={{ backgroundColor: 'white', borderRadius: '5px'}} error={valErr.webDScore ? true : false}  required fullWidth id="webDScore" onChange={handleOnChange} label="WevDev Score" name="webDScore" value={student.webDScore} InputProps={{inputProps: { max: 100, min: 0 } }} />
                 <Typography variant='body1' color={'error'} component="p" >{valErr.webDScore ? valErr.webDScore : ''}</Typography>
               </Grid>
 
-              <Grid item xs={4} /*  md={4} lg={4} */>
+              <Grid item xs={4} >
                 <TextField type={'number'} style={{ backgroundColor: 'white', borderRadius: '5px'}} error={valErr.reactScore ? true : false} required fullWidth id="reactScore" onChange={handleOnChange} label="React Score" name="reactScore" value={student.reactScore} InputProps={{inputProps: { max: 100, min: 0 } }} />
                 <Typography variant='body1' color={'error'} component="p" >{valErr.reactScore ? valErr.reactScore : ''}</Typography>
               </Grid>
 
-              <Grid item xs={12} /* md={12} lg={12} */>
+              <Grid item xs={12} >
                 <Button type='submit' variant='contained' color='success' fullWidth >ADD</Button>
               </Grid>
             </Grid>

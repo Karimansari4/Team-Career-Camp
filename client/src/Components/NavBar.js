@@ -13,12 +13,11 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 import { Link, useNavigate } from 'react-router-dom';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import axios from 'axios';
 import { CSVLink } from 'react-csv';
 
 function NavBar({emp}) {
-    const url = "https://college-project.onrender.com"
+    const url = "https://team-career-camp.onrender.com"
 
     const [students, setStudents] = React.useState([])
     
@@ -41,6 +40,7 @@ function NavBar({emp}) {
         setAnchorElUser(null);
     };
 
+    // logout function
     const logout = () => {
         localStorage.removeItem('token')
         navigate('/signin')

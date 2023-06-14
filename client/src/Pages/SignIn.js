@@ -3,15 +3,11 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-// import Link from '@mui/material/Link';
 import { Link, useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios'
 import MuiAlert from '@mui/material/Alert';
@@ -19,12 +15,13 @@ import { Paper, Snackbar } from '@mui/material';
 
 const theme = createTheme();
 
+// Alert notification of MUI
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 export default function SignIn() {
-  const url = "https://college-project.onrender.com"
+  const url = "https://team-career-camp.onrender.com"
 
   const navigate = useNavigate()
 
@@ -40,8 +37,7 @@ export default function SignIn() {
     password: ''
   })
   
-
-
+  // handle close for UI component alert
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -49,6 +45,7 @@ export default function SignIn() {
     setOpen(false);
   }
 
+  // input onchange event
   const handleOnChange = (evt) => {
     setEmp({
       ...emp,
@@ -61,6 +58,7 @@ export default function SignIn() {
     })
   }
 
+  // handle submit for SigIn
   const handleSubmit = async(evt) => {
     evt.preventDefault();
     if(!emp.email){
@@ -76,25 +74,18 @@ export default function SignIn() {
         password: 'Password must be more than 5 words!'
       })
     }else{
-      return await axios.post(`https://college-project.onrender.com/empAuth/signIn`, emp).then((response) => { 
-      // return await axios.post(`http://localhost:4000/empAuth/signIn`, emp).then((response) => {
-        // console.log("response: ", response);
+      return await axios.post(`${url}/empAuth/signIn`, emp).then((response) => { 
         const token = response.data.token
         localStorage.setItem("token", token)
         navigate('/')
       }).catch((err) => {
-        setError(err.response.data.msg)
+        setError(err?.response?.data.msg)
         setCustomVariant('error')
         setOpen(true)
         console.log("err: ", err);
       })
     }
   }
-
-  // const BASE_URL = process.env.REACT_APP_TRY;
-
-  // console.log("url: ", window.env.URL_ONLINE);
-  // console.log("TRY: ", BASE_URL);
 
   return (
     <ThemeProvider theme={theme}>

@@ -2,6 +2,7 @@ const Interviews = require('../Models/Interviews')
 const Students = require('../Models/Students')
 const nodemailer = require('nodemailer')
 
+// fetching all the interview data from database
 exports.getAllInterviews = async(req, res) => {
     try {
         const result = await Interviews.find({}).populate('students.student')
@@ -16,6 +17,7 @@ exports.getAllInterviews = async(req, res) => {
     }
 }
 
+// creating interview in database
 exports.createInterview = async(req, res) => {
     const { name, date, time} = req.body
 
@@ -40,6 +42,7 @@ exports.createInterview = async(req, res) => {
     }
 }
 
+// enrolling interview with student
 exports.enrollInInterview = async(req, res) => {
     const id = req.params.id
     const { email, result } = req.body
@@ -77,7 +80,6 @@ exports.enrollInInterview = async(req, res) => {
                         if(scheduleInterivew && assignedSuccess){
 
                             // creating mail servies
-
                             let transporter = nodemailer.createTransport({
                                 service: 'gmail',
                                 host: "smtp.gmail.com",
@@ -114,7 +116,6 @@ exports.enrollInInterview = async(req, res) => {
                     
                     if(scheduleInterivew && assignedSuccess){
                         // creating mail servies
-
                         let transporter = nodemailer.createTransport({
                             service: 'gmail',
                             host: "smtp.gmail.com",
@@ -150,6 +151,7 @@ exports.enrollInInterview = async(req, res) => {
     }
 }
 
+// deallocating interview 
 exports.deallocateInterview = async(req, res) => {
     const { studentId, interviewId} = req.params
 
@@ -177,6 +179,7 @@ exports.deallocateInterview = async(req, res) => {
     }
 }
 
+// deleting company from database
 exports.deleteCompany = async(req, res) => {
     const id = req.params.id
 

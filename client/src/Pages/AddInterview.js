@@ -9,38 +9,39 @@ import MuiAlert from '@mui/material/Alert';
 import BusinessRoundedIcon from '@mui/icons-material/BusinessRounded';
 import { TimePicker } from '@mui/x-date-pickers';
 
-
+// Alert notification of MUI
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
 function AddInterview() {
-    const url = "https://college-project.onrender.com"
+    const url = "https://team-career-camp.onrender.com"
 
+    // states
     const [open, setOpen] = React.useState(false);
     const [customVariant, setCustomVariant] = React.useState('success')
     const [success, setSuccess] = React.useState('')
-    const [error, setError] = React.useState('')
-
+    const [error, setError] = React.useState('')    
+    const [company, setCompany] = useState({
+        name: '',
+        date: '',
+        time: '',
+    })
+    const [valErr, setValErr] = React.useState({
+        name: '',
+        date: '',
+        time: '',
+    })
+    
+    // handle close for UI component alert
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
         return;
         }
         setOpen(false);
     }
-    
-    const [company, setCompany] = useState({
-        name: '',
-        date: '',
-        time: '',
-    })
 
-    const [valErr, setValErr] = React.useState({
-        name: '',
-        date: '',
-        time: '',
-    })
-
+    // input onchange event
     const handleOnChange = (evt) => {
         setCompany({
           ...company,
@@ -54,6 +55,7 @@ function AddInterview() {
         })
     }
 
+    // onchange event of date input
     const handleChangeData = (evt) => {
         setCompany({
             ...company,
@@ -67,6 +69,7 @@ function AddInterview() {
         })
     };
 
+    // onchange event of time input
     const handleTimeChange = (evt) => {
         setCompany({
             ...company,
@@ -79,6 +82,7 @@ function AddInterview() {
         })
     }
 
+    // handle submit for creating interview
     const handleSubmit = async(evt) => {
         evt.preventDefault()
         if(!company.name){

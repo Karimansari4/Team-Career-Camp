@@ -14,17 +14,23 @@ import MuiAlert from '@mui/material/Alert';
 
 // http://localhost:4000/admin/login
 
-
+// Alert notification of MUI
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 function UpdateStudent() {
+
+    // react-router-dom params for geting id from other component of react
     const {id} = useParams()
+
     const url = "https://college-project.onrender.com"
     const localUrl = "http://localhost:4000"
 
+    // react-router-dom fro navigatig to define route
     const navigate = useNavigate()
+
+    // states
     const [student, setStudent] = React.useState({
         name: '',
         email: '',
@@ -51,6 +57,7 @@ function UpdateStudent() {
     const [success, setSuccess] = React.useState('')
     const [error, setError] = React.useState('')
 
+    // handle close for UI component alert
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
         return;
@@ -58,6 +65,7 @@ function UpdateStudent() {
         setOpen(false);
     }
 
+    // input onchange event
     const handleOnChange = (evt) => {
         setStudent({
         ...student,
@@ -76,6 +84,7 @@ function UpdateStudent() {
         })
     }
 
+    // getting data by ites id
     const getById = async() => {
         return await axios.get(`${url}/student/getStudentById/${id}`).then((response) => {
             setStudent(response.data.result)
@@ -88,10 +97,12 @@ function UpdateStudent() {
         })
     }
 
+    // useEffect to redern on every reloading of page or refresh trigered
     useEffect(() => {
         getById()
     }, [])
 
+    // handle submit to update data of student
     const handleSubmit = async(evt) => {
         evt.preventDefault();
         if(!student.name){
@@ -188,23 +199,22 @@ function UpdateStudent() {
             <Typography component="h1" variant="h5"> Add Student </Typography>
           </center>
             <Grid container spacing={2} sx={{mt: 1}} >
-              <Grid item  xs={12}/*  md={12} lg={12} */>
+              <Grid item  xs={12} >
                 <TextField style={{ backgroundColor: 'white', borderRadius: '5px'}} error={valErr.name ? true : false} autoComplete="given-name" name="name" value={student.name} onChange={handleOnChange} required fullWidth id="name" label="Name" autoFocus />
                 <Typography variant='body1' color={'error'} component="p" >{valErr.name ? valErr.name : ''}</Typography>
               </Grid>
 
-              <Grid item xs={12}  /* md={12} lg={12} */>
+              <Grid item xs={12} >
                 <TextField style={{ backgroundColor: 'white', borderRadius: '5px'}} error={valErr.email ? true : false} required fullWidth id="email" onChange={handleOnChange} label="Email Address" name="email" value={student.email} autoComplete="email" />
                 <Typography variant='body1' color={'error'} component="p" >{valErr.email ? valErr.email : ''}</Typography>
               </Grid>
 
-              <Grid item xs={12}  /* md={12} lg={12} */>
+              <Grid item xs={12} >
                 <TextField style={{ backgroundColor: 'white', borderRadius: '5px'}} error={valErr.college ? true : false} required fullWidth id="college" onChange={handleOnChange} label="College Name" name="college" value={student.college} />
                 <Typography variant='body1' color={'error'} component="p" >{valErr.college ? valErr.college : ''}</Typography>
               </Grid>
 
-              <Grid item xs={6}  /* md={6} lg={6} */>
-                {/* <TextField sx={{ backgroundColor: 'white', borderRadius: '10px'}} error={valErr.college ? true : false} helperText={valErr.college ? valErr.college : ''} required fullWidth id="college" onChange={handleOnChange} label="College Name" name="college" /> */}
+              <Grid item xs={6} >
                 <FormControl style={{ width: '100%'}}>
                   <InputLabel id="demo-simple-select-label"> Placement Status </InputLabel>
                   <Select error={valErr.placementStatus ? true : false} labelId="demo-simple-select-label" value={student.placementStatus} style={{ width: '100%' , backgroundColor: 'white', borderRadius: '5px' }}
@@ -216,28 +226,28 @@ function UpdateStudent() {
                 </FormControl>
               </Grid>
 
-              <Grid item xs={6} /*  md={6} lg={6} */>
+              <Grid item xs={6} >
                 <TextField style={{ backgroundColor: 'white', borderRadius: '5px'}} error={valErr.batch ? true : false}  required fullWidth id="batch" onChange={handleOnChange} label="Batch" name="batch" value={student.batch} />
                 <Typography variant='body1' color={'error'} component="p" >{valErr.batch ? valErr.batch : ''}</Typography>
               </Grid>
 
-              <Grid item xs={4} /*  md={4} lg={4} */>
+              <Grid item xs={4} >
                 <TextField type={'number'} style={{ backgroundColor: 'white', borderRadius: '5px'}} error={valErr.dsaScore ? true : false} required fullWidth id="dsaScore" onChange={handleOnChange} label="1st Year" name="dsaScore" value={student.dsaScore} InputProps={{inputProps: { max: 100, min: 0 } }} />
                 <Typography variant='body1' color={'error'} component="p" >{valErr.dsaScore ? valErr.dsaScore : ''}</Typography>
               </Grid>
 
-              <Grid item xs={4} /*  md={4} lg={4} */>
+              <Grid item xs={4} >
                 <TextField type={'number'} style={{ backgroundColor: 'white', borderRadius: '5px'}} error={valErr.webDScore ? true : false}  required fullWidth id="webDScore" onChange={handleOnChange} label="2nd Year" name="webDScore" value={student.webDScore} InputProps={{inputProps: { max: 100, min: 0 } }} />
                 <Typography variant='body1' color={'error'} component="p" >{valErr.webDScore ? valErr.webDScore : ''}</Typography>
               </Grid>
 
-              <Grid item xs={4} /*  md={4} lg={4} */>
+              <Grid item xs={4} >
                 <TextField type={'number'} style={{ backgroundColor: 'white', borderRadius: '5px'}} error={valErr.reactScore ? true : false} required fullWidth id="reactScore" onChange={handleOnChange} label="3rd Year" name="reactScore" value={student.reactScore} InputProps={{inputProps: { max: 100, min: 0 } }} />
                 <Typography variant='body1' color={'error'} component="p" >{valErr.reactScore ? valErr.reactScore : ''}</Typography>
               </Grid>
 
-              <Grid item xs={12} /* md={12} lg={12} */>
-                <Button type='submit' variant='contained' color='success' fullWidth >ADD</Button>
+              <Grid item xs={12} >
+                <Button type='submit' variant='contained' color='success' fullWidth >Update</Button>
               </Grid>
             </Grid>
           </Box>

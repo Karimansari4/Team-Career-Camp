@@ -86,7 +86,7 @@ function UpdateStudent() {
 
     // getting data by ites id
     const getById = async() => {
-        return await axios.get(`${url}/student/getStudentById/${id}`).then((response) => {
+        return await axios.get(`${localUrl}/student/getStudentById/${id}`).then((response) => {
             setStudent(response.data.result)
             // console.log("response: ", response);
         }).catch((err) => {
@@ -151,8 +151,7 @@ function UpdateStudent() {
             })
         }else{
 
-        return await axios.post(`${url}/student/updateStudent/${id}`, student).then((response) => {
-            // console.log("response: ", response);
+        return await axios.post(`${localUrl}/student/updateStudent/${id}`, student).then((response) => {
             if(response.data.success){
             setSuccess(response.data.msg)
             setCustomVariant('success')

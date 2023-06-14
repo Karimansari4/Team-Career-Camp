@@ -22,6 +22,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 export default function SignIn() {
   const url = "https://team-career-camp.onrender.com"
+  const localUrl = "http://localhost:4000"
 
   const navigate = useNavigate()
 
@@ -74,7 +75,7 @@ export default function SignIn() {
         password: 'Password must be more than 5 words!'
       })
     }else{
-      return await axios.post(`${url}/empAuth/signIn`, emp).then((response) => { 
+      return await axios.post(`${localUrl}/empAuth/signIn`, emp).then((response) => { 
         const token = response.data.token
         localStorage.setItem("token", token)
         navigate('/')

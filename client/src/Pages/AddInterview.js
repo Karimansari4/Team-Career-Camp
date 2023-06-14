@@ -16,6 +16,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 function AddInterview() {
     const url = "https://team-career-camp.onrender.com"
+    const localUrl = "http://localhost:4000"
 
     // states
     const [open, setOpen] = React.useState(false);
@@ -99,7 +100,7 @@ function AddInterview() {
             })
         }else{
             
-            return await axios.post(`${url}/interview/createInterivew`, company).then((response) => {
+            return await axios.post(`${localUrl}/interview/createInterivew`, company).then((response) => {
                 setSuccess(response.data.msg)
                 setCustomVariant('success')
                 setOpen(true)

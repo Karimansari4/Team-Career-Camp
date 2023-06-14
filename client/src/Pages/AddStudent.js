@@ -21,6 +21,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 function AddStudent() {
   const url = "https://team-career-camp.onrender.com"
+  const localUrl = "http://localhost:4000"
 
   // states
   const [student, setStudent] = React.useState({
@@ -125,7 +126,7 @@ function AddStudent() {
       })
     }else{
 
-      return await axios.post(`${url}/student/addStudent`, student).then((response) => {
+      return await axios.post(`${localUrl}/student/addStudent`, student).then((response) => {
         // console.log("response: ", response);
         if(response.data.success){
           setSuccess(response.data.msg)

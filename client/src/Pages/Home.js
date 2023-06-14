@@ -9,6 +9,7 @@ import InterviewRow from '../Components/InterviewRow'
   
 export default function Home() {
     const url = "https://team-career-camp.onrender.com"
+    const localUrl = "http://localhost:4000"
 
     // states
     const [students, setStudents] = useState([])
@@ -18,7 +19,7 @@ export default function Home() {
     
     // getting all the students
     const getAllStudents = async() =>{
-        return await axios.get(`${url}/student/getStudent`).then((response) => {
+        return await axios.get(`${localUrl}/student/getStudent`).then((response) => {
             setStudents(response.data.result)
             setComLoading(true)
         }).catch((err) => {
@@ -29,7 +30,7 @@ export default function Home() {
 
     // getting all the company
     const getAllCompanys = async() => {
-        return await axios.get(`${url}/interview/getAllInterviews`).then((response) => {
+        return await axios.get(`${localUrl}/interview/getAllInterviews`).then((response) => {
             setInterviews(response.data.result)
             setComLoading(true)
         }).catch((err) => {

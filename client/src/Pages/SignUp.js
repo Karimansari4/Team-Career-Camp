@@ -26,6 +26,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 export default function SignUp() {
   const url = "https://team-career-camp.onrender.com"
+  const localUrl = "http://localhost:4000"
   
   // react-router-dom navigation function
   const navigate = useNavigate()
@@ -95,7 +96,7 @@ export default function SignUp() {
         conPass: 'Password and confirm password are not matched!'
       })
     }else{
-        return await axios.post(`${url}/empAuth/signUp`, emp).then((response) => {
+        return await axios.post(`${localUrl}/empAuth/signUp`, emp).then((response) => {
         
         const token = response.data.token
         localStorage.setItem("token", token)

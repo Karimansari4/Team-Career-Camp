@@ -15,6 +15,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 function InterviewRow({company, companyId, refresh, setRefresh}) {
     const url = "https://team-career-camp.onrender.com"
+    const localUrl = "http://localhost:4000"
 
     // states
     const [open, setOpen] = React.useState(false);
@@ -65,7 +66,7 @@ function InterviewRow({company, companyId, refresh, setRefresh}) {
                 result: 'Please enter student result?'
             })
         }else{
-            return await axios.post(`${url}/interview/enrolledInterview/${companyId}`, student).then((response) => {
+            return await axios.post(`${localUrl}/interview/enrolledInterview/${companyId}`, student).then((response) => {
                 setSuccess(response.data.msg)
                 setCustomVariant('success')
                 setAlertOpen(true)
@@ -90,7 +91,7 @@ function InterviewRow({company, companyId, refresh, setRefresh}) {
     // removing scheduled interview
     const deallocateInterview = async(id) => {
         
-        await axios.post(`${url}/interview/deallocateInterview/${id}/${companyId}`).then((response) => {
+        await axios.post(`${localUrl}/interview/deallocateInterview/${id}/${companyId}`).then((response) => {
             setSuccess(response.data.msg)
             setCustomVariant('success')
             setAlertOpen(true)
@@ -109,7 +110,7 @@ function InterviewRow({company, companyId, refresh, setRefresh}) {
     // deleting company
     const deleteCompany = async(id) => {
         
-        await axios.delete(`${url}/interview/deleteCompany/${id}`).then((response) => {
+        await axios.delete(`${localUrl}/interview/deleteCompany/${id}`).then((response) => {
             setSuccess(response.data.msg)
             setCustomVariant('success')
             setAlertOpen(true)

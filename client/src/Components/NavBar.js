@@ -18,6 +18,7 @@ import { CSVLink } from 'react-csv';
 
 function NavBar({emp}) {
     const url = "https://team-career-camp.onrender.com"
+    const localUrl = "http://localhost:4000"
 
     const [students, setStudents] = React.useState([])
     
@@ -49,7 +50,7 @@ function NavBar({emp}) {
 
     // get all data to csv file
     const getAllStudents = async() =>{
-        return await axios.get(`${url}/student/getStudent`).then((response) => {
+        return await axios.get(`${localUrl}/student/getStudent`).then((response) => {
             setStudents(response.data.result)
             // setComLoading(true)
         }).catch((err) => {

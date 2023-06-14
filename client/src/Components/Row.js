@@ -15,6 +15,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 function Row({student, studentId, refresh, setRefresh}) {
     const url = "https://team-career-camp.onrender.com"
+    const localUrl = "http://localhost:4000"
 
     // states
     const [open, setOpen] = useState(false)
@@ -40,7 +41,7 @@ function Row({student, studentId, refresh, setRefresh}) {
             setAlertOpen(true)
             console.log("delete leng");
         }else{
-            await axios.delete(`${url}/student/deleteStudent/${id}`).then((response) => {
+            await axios.delete(`${localUrl}/student/deleteStudent/${id}`).then((response) => {
                 setSuccess(response.data.msg)
                 setCustomVariant('success')
                 setAlertOpen(true)

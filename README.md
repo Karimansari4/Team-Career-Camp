@@ -18,12 +18,16 @@
         <li>Didn’t Attempt - The student who has not appear for interview</li>
     </ul>
     <li>A view to show all students and company</li>
-    <li>A view to show interview scheduled in a company</li>
+    <li>List of Interviews + form to create an interview (with date and time)</li>
+    <ul>
+        <li>Allocate a student to an interview</li>
+        <li>Select an interview to view the list of all students and mark a result status from the list page itself </li>
+    </ul>
 </ul>
 
 
 <h3>HOW TO INSTALL AND SETUP IN YOUR LOCAL PC/LAPTOP</h3>
-<h6>Setp 1 -></h6> <p>First goto <a href="https://nodejs.org/en">click here</a> to download node js in your pc/laptop</p>
+<h6>Setp 1 -></h6> <p>First goto <a href="https://nodejs.org/en">Node js official website</a> to download node js in your pc/laptop</p>
 </h6><p>if already installed than skiped</p>
 
 <h6>Setp 2 -></h6><p>Clone or download the zip of our project</p>
@@ -35,6 +39,7 @@
 <p>Project is setedup and runinng on localhost:4000/</p>
 
 <h3>Demo Link -> <a href="https://team-career-camp.onrender.com">Click here</a></h3>
+
 
 # Getting Started with Create React App
 

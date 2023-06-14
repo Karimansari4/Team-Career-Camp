@@ -5,7 +5,6 @@ const db = require('./DBConfig/db')
 const empRouter = require('./Routes/EmployeesRoute')
 const stRoute = require('./Routes/Student')
 const intRoute = require('./Routes/Interview')
-const reportRoute = require('./Routes/Report')
 const port = 4000
 const path = require('path')
 
@@ -29,7 +28,6 @@ app.get('/', (req,res) => {
 app.use('/empAuth', empRouter)
 app.use('/student', stRoute)
 app.use('/interview', intRoute)
-app.use('/report', reportRoute)
 
 // running server in port
 app.listen(port, () => {

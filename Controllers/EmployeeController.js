@@ -24,7 +24,7 @@ exports.signup = async(req, res) => {
             return res.status(400).json({msg: 'Please enter email', success: false})
         }else if(!password){
             return res.status(400).json({msg: 'Please enter password', success: false})
-        }else if(password.length > 5){
+        }else if(password.length < 5){
             return res.status(400).json({msg: 'Password must be more than 5 words', success: false})
         }else{
             
